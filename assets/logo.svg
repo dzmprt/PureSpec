@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">PureSpec code braces wordmark</title>
+  <rect width="512" height="512" rx="88" fill="#FCFCFC"/>
+  <path d="M119 121H96c-19 0-31 13-31 32v55c0 28-12 42-34 48 22 6 34 20 34 48v55c0 19 12 32 31 32h23M393 121h23c19 0 31 13 31 32v55c0 28 12 42 34 48-22 6-34 20-34 48v55c0 19-12 32-31 32h-23" fill="none" stroke="#262626" stroke-width="17" stroke-linecap="round"/>
+  <text x="256" y="278" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" text-anchor="middle"><tspan fill="#262626">Pure</tspan><tspan fill="#00A896">Spec</tspan></text>
+  <path d="M190 320h132" stroke="#00A896" stroke-width="10" stroke-linecap="round"/>
+</svg>

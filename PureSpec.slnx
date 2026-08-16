@@ -1,0 +1,22 @@
+<Solution>
+    <Folder Name="/src/">
+        <Project Path="src/PureSpec.Repositories.EntityFrameworkCore/PureSpec.Repositories.EntityFrameworkCore.csproj" />
+        <Project Path="src/PureSpec/PureSpec.csproj" />
+        <Project Path="src/PureSpec.Repositories.Abstractions/PureSpec.Repositories.Abstractions.csproj" />
+    </Folder>
+    <Folder Name="/samples/">
+        <Project Path="samples/VerySimpleSample/VerySimpleSample.csproj" />
+      <Project Path="samples/ConsoleSample/ConsoleSample.csproj" />
+    </Folder>
+    <Folder Name="/tests/">
+        <Project Path="tests/PureSpec.Tests/PureSpec.Tests.csproj" />
+        <Project Path="tests/PureSpec.Repositories.Abstractions.Tests/PureSpec.Repositories.Abstractions.Tests.csproj" />
+        <Project Path="tests/PureSpec.Repositories.EntityFrameworkCore.Tests/PureSpec.Repositories.EntityFrameworkCore.Tests.csproj" />
+    </Folder>
+    <Folder Name="/samples/BooksWebApi/">
+        <Project Path="samples/BooksWebApi/Books.Application/Books.Application.csproj" />
+        <Project Path="samples/BooksWebApi/Books.Domain/Books.Domain.csproj" />
+        <Project Path="samples/BooksWebApi/Books.Infrastructure/Books.Infrastructure.csproj" />
+        <Project Path="samples/BooksWebApi/Books.WebApi/Books.WebApi.csproj" />
+    </Folder>
+</Solution>

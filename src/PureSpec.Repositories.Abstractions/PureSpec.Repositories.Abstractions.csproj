@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Version>0.0.1-alpha-5</Version>
+    <Title>PureSpec</Title>
+    <Description>PureSpec is a minimalist implementation of the Specification pattern for creating
+      reusable business rules and database queries.</Description>
+    <Authors>Dzmitry Pratsko</Authors>
+    <PackageProjectUrl>https://github.com/dzmprt/PureSpec</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/dzmprt/PureSpec</RepositoryUrl>
+    <PackageTags>purespec;specification;</PackageTags>
+    <PackageReleaseNotes>0.0.1-alpha-5</PackageReleaseNotes>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>logo.png</PackageIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PureSpec" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\assets\logo.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+</Project>
