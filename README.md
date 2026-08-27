@@ -250,7 +250,10 @@ Entity and projected query overloads are available where applicable. Operations 
 `IRepository<TEntity>` also supports:
 
 - `AddAsync`;
+- `AddManyAsync`;
 - `UpdateAsync`;
+- `UpdateManyAsync`;
+- `DeleteManyAsync`;
 - `DeleteAsync`.
 
 `DeleteAsync` requires the query to match exactly one entity. It throws `EntityNotFoundException` when no entity is found and follows `SingleOrDefaultAsync` semantics when multiple entities match.
