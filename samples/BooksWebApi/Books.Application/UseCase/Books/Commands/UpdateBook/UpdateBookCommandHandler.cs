@@ -2,18 +2,15 @@ using Books.Application.Exceptions;
 using Books.Application.UseCase.Books.Commands.CreateBook;
 using Books.Domain;
 using Books.Domain.Specifications;
+using Microsoft.EntityFrameworkCore;
 using MitMediator;
-using PureSpec.Repositories.Abstractions;
 
 namespace Books.Application.UseCase.Books.Commands.UpdateBook;
 
 /// <summary>
 /// Handler for <see cref="CreateBookCommand"/>
 /// </summary>
-public class UpdateBookCommandHandler(
-    IRepository<Book> booksRepository,
-    IRepository<Author> authorsRepository,
-    IRepository<Genre> genresRepository) :
+public class UpdateBookCommandHandler(DbContext dbContext) :
     IRequestHandler<UpdateBookCommand, Book>
 {
     /// <inheritdoc/>
@@ -21,7 +18,7 @@ public class UpdateBookCommandHandler(
     {
         var bookSpec = new BookByIdSpec(request.BookId);
 
-        var book = await booksRepository.FirstOrDefaultAsync(bookSpec.ToQuery(), cancellationToken);
+        var book = await dbContext.Set<Book>().FirstOrDefaultAsync(bookSpec.Predicate, cancellationToken);
         if (book is null)
         {
             throw new NotFoundException();
@@ -35,14 +32,14 @@ public class UpdateBookCommandHandler(
         var authorSpec = new AuthorByIdSpec(request.AuthorId)
             .AndNot(new AuthorIsDeletedSpec());
 
-        var author = await authorsRepository.FirstOrDefaultAsync(authorSpec.ToQuery(), cancellationToken);
+        var author = await dbContext.Set<Author>().FirstOrDefaultAsync(authorSpec.Predicate, cancellationToken);
         if (author is null)
         {
             throw new BadOperationException("Author not found");
         }
 
         var genreSpec = new GenreByNameSpec(request.GenreName.Trim().ToUpperInvariant());
-        var genre = await genresRepository.FirstOrDefaultAsync(genreSpec.ToQuery(), cancellationToken);
+        var genre = await dbContext.Set<Genre>().FirstOrDefaultAsync(genreSpec.Predicate, cancellationToken);
         if (genre is null)
         {
             throw new BadOperationException("Genre not found");
@@ -51,8 +48,6 @@ public class UpdateBookCommandHandler(
         book.SetTitle(request.Title);
         book.SetAuthor(author);
         book.SetGenre(genre);
-
-        await booksRepository.UpdateAsync(book, cancellationToken);
         return book;
     }
 }

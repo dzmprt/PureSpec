@@ -65,10 +65,10 @@ public sealed class SpecificationTests
     public void ProjectRejectsNullArguments()
     {
         var specification = new PureSpec.Specification<Item>(item => item.Value > 0);
-        ISpecification<Item> specNull = null;
+        ISpecification<Item> specNull = null!;
         Assert.Throws<ArgumentNullException>(() => specification.Project<string>(null!));
 
-        Assert.Throws<ArgumentNullException>(() => new ProjectedSpecification<Item, string>(specNull, item => item.Name));
-        Assert.Throws<ArgumentNullException>(() => new ProjectedSpecification<Item, string>(specification, null!));
+        Assert.Throws<ArgumentNullException>(() => new SpecificationProjection<Item, string>(specNull, item => item.Name));
+        Assert.Throws<ArgumentNullException>(() => new SpecificationProjection<Item, string>(specification, null!));
     }
 }

@@ -21,7 +21,4 @@
         <ExcludeFromCodeCoverage>true</ExcludeFromCodeCoverage>
     </PropertyGroup>
 
-    <ItemGroup>
-    <PackageReference Include="PureSpec.Repositories.EntityFrameworkCore" />
-  </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using PureSpec.Repositories.EntityFrameworkCore;
 
 namespace Books.Infrastructure;
 
@@ -19,10 +18,8 @@ public static class DependencyInjection
     {
         var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
-        return services
-            .AddDbContext<DbContext, ApplicationDbContext>(options => { options.UseSqlite(connection); })
-            .AddPureSpecRepositories()
-        ;
+        return services.AddDbContext<DbContext, ApplicationDbContext>(
+            options => options.UseSqlite(connection));
 
     }
 }

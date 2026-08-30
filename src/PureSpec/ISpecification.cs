@@ -25,8 +25,8 @@ public interface ISpecification<TEntity>
     /// </summary>
     /// <typeparam name="TResult">The projected result type.</typeparam>
     /// <param name="selector">The expression that selects the result.</param>
-    /// <returns>A projected specification.</returns>
-    IProjectedSpecification<TEntity, TResult> Project<TResult>(Expression<Func<TEntity, TResult>> selector);
+    /// <returns>A composition of this specification and the projection.</returns>
+    ISpecificationProjection<TEntity, TResult> Project<TResult>(Expression<Func<TEntity, TResult>> selector);
 
     /// <summary>
     /// Combines this rule with another rule using logical OR.

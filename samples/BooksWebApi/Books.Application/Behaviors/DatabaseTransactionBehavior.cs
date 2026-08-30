@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using MitMediator;
-using PureSpec.Repositories.Abstractions;
 
 namespace Books.Application.Behaviors;
 
-public class DatabaseTransactionBehavior<TRequest, TResponse>(ITransactionManager transactionManager) :
+public class DatabaseTransactionBehavior<TRequest, TResponse>(DbContext dbContext) :
     IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
 {
@@ -12,16 +12,10 @@ public class DatabaseTransactionBehavior<TRequest, TResponse>(ITransactionManage
         IRequestHandlerNext<TRequest, TResponse> next,
         CancellationToken cancellationToken)
     {
-        try
-        {
-            var result = await next.InvokeAsync(request, cancellationToken);
-            await transactionManager.CommitTransactionAsync(cancellationToken);
-            return result;
-        }
-        catch (Exception)
-        {
-            await transactionManager.RollbackTransactionAsync();
-            throw;
-        }
+        await using var transaction = await dbContext.Database.BeginTransactionAsync(cancellationToken);
+        var result = await next.InvokeAsync(request, cancellationToken);
+        await dbContext.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        return result;
     }
 }

@@ -1,7 +1,6 @@
 using System.Net;
 using Books.Application.Exceptions;
 using FluentValidation;
-using PureSpec.Repositories.Abstractions;
 
 namespace Books.WebApi.Middlewares;
 

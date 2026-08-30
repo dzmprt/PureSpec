@@ -97,13 +97,13 @@ public class Specification<TEntity> : ISpecification<TEntity>
     }
 
     /// <summary>
-    /// Creates a projected specification that keeps this rule.
+    /// Creates a projection that keeps this rule.
     /// </summary>
     /// <typeparam name="TResult">The projected result type.</typeparam>
     /// <param name="selector">The expression that selects the result.</param>
-    /// <returns>A projected specification.</returns>
-    public IProjectedSpecification<TEntity, TResult> Project<TResult>(Expression<Func<TEntity, TResult>> selector)
+    /// <returns>A composition of this specification and the projection.</returns>
+    public ISpecificationProjection<TEntity, TResult> Project<TResult>(Expression<Func<TEntity, TResult>> selector)
     {
-        return new ProjectedSpecification<TEntity, TResult>(this, selector);
+        return new SpecificationProjection<TEntity, TResult>(this, selector);
     }
 }

@@ -2,8 +2,6 @@ using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using PureSpec;
-using PureSpec.Repositories.Abstractions;
-using PureSpec.Repositories.EntityFrameworkCore;
 
 var publishedSpec = new PublishedSpec();
 var scienceFictionSpec = new ScienceFictionSpec();
@@ -29,21 +27,17 @@ dbContext.Books.AddRange(
     new Book("Unpublished draft", "Science fiction", false));
 await dbContext.SaveChangesAsync();
 
-var bookProvider = new BaseProvider<Book>(dbContext);
+Console.WriteLine($"Published books count: {await dbContext.Books.CountAsync(publishedSpec.Predicate)}");
+Console.WriteLine($"Featured book count: {await dbContext.Books.CountAsync(featured.Predicate)}");
+Console.WriteLine($"Book by title \"Dune\": {JsonSerializer.Serialize(await dbContext.Books.SingleOrDefaultAsync(bookByTitleDuneSpec.Predicate))}");
 
-Console.WriteLine($"Published books count: {await bookProvider.CountAsync(publishedSpec.ToQuery(), CancellationToken.None)}");
-Console.WriteLine($"Featured book count: {await bookProvider.CountAsync(featured.ToQuery(), CancellationToken.None)}");
-Console.WriteLine($"Book by title \"Dune\": {JsonSerializer.Serialize(await bookProvider.SingleOrDefaultAsync(bookByTitleDuneSpec.ToQuery(), CancellationToken.None))}");
-
-var transactionManager = new TransactionManager(dbContext);
-var repository = new BaseRepository<Book>(dbContext, transactionManager);
 var addedBook = new Book("Neuromancer", "Science fiction", true);
-await repository.AddAsync(addedBook, CancellationToken.None);
-await transactionManager.CommitTransactionAsync(CancellationToken.None);
-var getAddedBookFromDb = await bookProvider
-    .SingleAsync(new BookByTitleSpec("Neuromancer").ToQuery(), CancellationToken.None);
+await dbContext.Books.AddAsync(addedBook);
+await dbContext.SaveChangesAsync();
+var getAddedBookFromDb = await dbContext.Books
+    .SingleAsync(new BookByTitleSpec("Neuromancer").Predicate);
 Console.WriteLine($"Added book: {JsonSerializer.Serialize(getAddedBookFromDb)}");
-Console.WriteLine($"Published count after insert: {await bookProvider.CountAsync(publishedSpec.ToQuery(), CancellationToken.None)}");
+Console.WriteLine($"Published count after insert: {await dbContext.Books.CountAsync(publishedSpec.Predicate)}");
 
 
 public sealed record Book(string Title, string Genre, bool IsPublished)

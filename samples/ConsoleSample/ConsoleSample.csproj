@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
   </ItemGroup>
 
-      <ItemGroup>
-    <ProjectReference Include="../../src/PureSpec.Repositories.EntityFrameworkCore/PureSpec.Repositories.EntityFrameworkCore.csproj" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PureSpec\PureSpec.csproj" />
   </ItemGroup>
 </Project>

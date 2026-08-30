@@ -22,8 +22,6 @@
 
   <ItemGroup>
     <PackageReference Include="MitMediator" />
-  </ItemGroup>
-    <ItemGroup>
-    <PackageReference Include="PureSpec.Repositories.Abstractions" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" />
   </ItemGroup>
 </Project>

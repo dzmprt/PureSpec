@@ -3,11 +3,11 @@ using System.Linq.Expressions;
 namespace PureSpec;
 
 /// <summary>
-/// Combines an entity filter with a result projection.
+/// Combines a specification with a result projection.
 /// </summary>
 /// <typeparam name="TEntity">The entity type.</typeparam>
 /// <typeparam name="TResult">The projected result type.</typeparam>
-public class ProjectedSpecification<TEntity, TResult> : IProjectedSpecification<TEntity, TResult>
+public class SpecificationProjection<TEntity, TResult> : ISpecificationProjection<TEntity, TResult>
 {
     /// <summary>
     /// Gets the expression that selects the result.
@@ -36,11 +36,11 @@ public class ProjectedSpecification<TEntity, TResult> : IProjectedSpecification<
     public Func<TEntity, TResult> CompileSelector() => _compiledSelectorFunc.Value;
 
     /// <summary>
-    /// Initializes a projected specification.
+    /// Initializes a specification projection.
     /// </summary>
     /// <param name="specification">The specification that provides the filter.</param>
     /// <param name="selector">The expression that selects the result.</param>
-    public ProjectedSpecification(
+    public SpecificationProjection(
         ISpecification<TEntity> specification,
         Expression<Func<TEntity, TResult>> selector)
     {
@@ -54,11 +54,11 @@ public class ProjectedSpecification<TEntity, TResult> : IProjectedSpecification<
     }
 
     /// <summary>
-    /// Initializes a projected specification.
+    /// Initializes a specification projection.
     /// </summary>
     /// <param name="predicate">Expression that filters entities.</param>
     /// <param name="selector">The expression that selects the result.</param>
-    public ProjectedSpecification(
+    public SpecificationProjection(
         Expression<Func<TEntity, bool>> predicate,
         Expression<Func<TEntity, TResult>> selector)
     {

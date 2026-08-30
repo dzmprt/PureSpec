@@ -26,9 +26,9 @@ Console.WriteLine(scienceFictionSpec.IsSatisfiedBy(OldBook));
 // true (genre is not Science fiction)
 Console.WriteLine(scienceFictionSpec.Not().IsSatisfiedBy(OldBook));
 
-var featuredProjectionSpec = featuredSpec.Project<string>(book => book.Title);
+var featuredProjection = featuredSpec.Project<string>(book => book.Title);
 
 // "Dune"
-Console.WriteLine(featuredProjectionSpec.CompileSelector().Invoke(featuredBook));
+Console.WriteLine(featuredProjection.CompileSelector().Invoke(featuredBook));
 
 public sealed record Book(string Title, string Genre, bool IsPublished, DateTime PublishedAt);

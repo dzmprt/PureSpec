@@ -3,11 +3,11 @@ using System.Linq.Expressions;
 namespace PureSpec;
 
 /// <summary>
-/// Represents a specification together with a result projection.
+/// Represents the composition of a specification and a result projection.
 /// </summary>
 /// <typeparam name="TEntity">The entity type.</typeparam>
 /// <typeparam name="TResult">The projected result type.</typeparam>
-public interface IProjectedSpecification<TEntity, TResult>
+public interface ISpecificationProjection<TEntity, TResult>
 {
     /// <summary>
     /// Gets the expression that selects the result.

@@ -1,16 +1,16 @@
 using Books.Application.Exceptions;
 using Books.Domain;
 using Books.Domain.Specifications;
+using Microsoft.EntityFrameworkCore;
 using MitMediator;
 using PureSpec;
-using PureSpec.Repositories.Abstractions;
 
 namespace Books.Application.UseCase.Authors.Queries.GetAuthor;
 
 /// <summary>
 /// Handler for <see cref="GetAuthorQuery"/>.
 /// </summary>
-internal sealed class GetAuthorQueryHandler(IProvider<Author> authorProvider) : IRequestHandler<GetAuthorQuery, Author>
+internal sealed class GetAuthorQueryHandler(DbContext dbContext) : IRequestHandler<GetAuthorQuery, Author>
 {
     /// <inheritdoc/>
     public async ValueTask<Author> HandleAsync(GetAuthorQuery query, CancellationToken cancellationToken)
@@ -18,7 +18,9 @@ internal sealed class GetAuthorQueryHandler(IProvider<Author> authorProvider) : 
         var spec = new AuthorByIdSpec(query.AuthorId)
              .AndNot(new AuthorIsDeletedSpec());
 
-        var author = await authorProvider.FirstOrDefaultAsync(spec.ToQuery(), cancellationToken);
+        var author = await dbContext.Set<Author>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(spec.Predicate, cancellationToken);
         if (author is null)
         {
             throw new NotFoundException();

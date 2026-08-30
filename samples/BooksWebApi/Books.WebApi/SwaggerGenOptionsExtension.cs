@@ -10,10 +10,10 @@ internal static class SwaggerGenOptionsExtension
     {
         options.SwaggerDoc("v1", new OpenApiInfo
         {
-            Title = "MitMediator project Books.WebApi sample.",
-            Description = "Github: https://github.com/dzmprt/MitMediator",
+            Title = "PureSpec project Books.WebApi sample.",
+            Description = "Github: https://github.com/dzmprt/PureSpec",
         });
-        
+
         var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
         options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     }

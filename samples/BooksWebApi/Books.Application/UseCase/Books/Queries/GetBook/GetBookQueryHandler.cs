@@ -1,22 +1,24 @@
 using Books.Application.Exceptions;
 using Books.Domain;
 using Books.Domain.Specifications;
+using Microsoft.EntityFrameworkCore;
 using MitMediator;
 using PureSpec;
-using PureSpec.Repositories.Abstractions;
 
 namespace Books.Application.UseCase.Books.Queries.GetBook;
 
 /// <summary>
 /// Handler for <see cref="GetBookQuery"/>.
 /// </summary>
-internal sealed class GetBookQueryHandler(IProvider<Book> booksProvider) : IRequestHandler<GetBookQuery, Book>
+internal sealed class GetBookQueryHandler(DbContext dbContext) : IRequestHandler<GetBookQuery, Book>
 {
     /// <inheritdoc/>
     public async ValueTask<Book> HandleAsync(GetBookQuery query, CancellationToken cancellationToken)
     {
         ISpecification<Book> spec = new BookByIdSpec(query.BookId);
-        var book = await booksProvider.FirstOrDefaultAsync(spec.ToQuery(), cancellationToken);
+        var book = await dbContext.Set<Book>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(spec.Predicate, cancellationToken);
         if (book is null)
         {
             throw new NotFoundException();
